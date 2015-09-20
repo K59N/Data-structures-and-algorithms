@@ -1,5 +1,14 @@
+//! \Filename: FastFile.cpp
+//! \Author: Loc VU
+//! \Date: 24.Sep.15
+
+//! \brief : Complete source code in this file
+
 #include <iostream>
-#include <conio.h>
+#include <cstdlib>
+#include <assert.h>
+#include <fstream>
+//#include <conio.h>
 using namespace std;
 
 class ArrayList{
@@ -8,7 +17,7 @@ public:
     ArrayList(); // Khoi tao danh sach rong
     ArrayList(int a[], int n); // Khoi tao DS bang du lieu luu trong mang a
     ArrayList(char * filename); // Khoi tao DS bang du lieu luu trong tep filename
-        
+
     bool empty() const; // Kiem tra DS rong hay khong
     int length() const; // Xac dinh do dai DS
     void insert(const int x, int i); // Xen gia tri x vao vi tri i trong DS
@@ -26,54 +35,82 @@ ArrayList::ArrayList(){
 }
 
 ArrayList::ArrayList(int a[], int n){
-    // Code cua ban ...
+    for(int i = 0; i < n ; i++){
+        element[i] = a[i];
+        last = n;
+    }
 }
 
 ArrayList::ArrayList(char * filename){
-    // Code cua ban ...
+    ifstream is(filename);
+    if (!is){
+         cout << "Can't open file!";
+        exit(1);
+    }else{
+        int var;
+        while(!is.eof()){
+            last++;
+            is >> var;
+            element[last] = var;
+        }
+    }
+    is.close();
+
 }
 
 bool ArrayList::empty() const{
-    // Thay phan ben duoi bang code cua ban ...    
-    return true;
+    if (last < 0)
+        return true;
 }
 
 int ArrayList::length() const{
-    // Thay phan ben duoi bang code cua ban ...       
-    return 0;
+    return last+1;
 }
 
 void ArrayList::insert(const int x, int i){
     assert(last < MAX_SIZE - 1 && i <= last);
-    // Code cua ban ...
+    last++;
+    element[last] = x;
+    int temp;
+    for (int j = last; j > i ; j--){
+        temp = element[j];
+        element[j] = element[j-1];
+        element[j-1] = temp;
+    }
+
 }
 
 void ArrayList::append(const int x){
     assert(last < MAX_SIZE - 1);
-    // Code cua ban ...
+    last++;
+    element[last] = x;
 }
 
 void ArrayList::erase(int i){
     assert(last >= 0 && i <= last && i >= 0);
-    // Code cua ban ...
+    last--;
+    for(int j = i; j < last; j++){
+        element[j+1] = element[j];
+    }
 }
 
 int& ArrayList::at(int i){
     assert(last >= 0 && i <= last && i >= 0);
-    // Thay phan ben duoi bang code cua ban ...    
+    cout << element[i];
     return i;
 }
 
 void ArrayList::print() const{
-    // Code cua ban ...
+    for (int i = 0; i <= last; i++){
+        cout << element[i] << " ";
+    }
+    cout << endl;
 }
 
 int main(){
     cout << "Chuong trinh test KDLTT danh sach so nguyen" << endl;
-    cout << "Tac gia: [Your name please]\n--------------------" << endl;
-    // Huong dan: Sau khi cai dat xong ham nao
-    // thi uncomment doan code ben duoi goi ham do de test
-    /*
+    cout << "Tac gia: [Loc VU]\n--------------------" << endl;
+
     cout << "L1: L1.append(3);L1.append(4);L1.append(5);"
         << "L1.insert(2, 0); L1.insert(1, 0); L1.insert(3, 2);" << endl;
 
@@ -81,6 +118,7 @@ int main(){
     L1.append(3); L1.print(); cout << endl;
     L1.append(4); L1.print(); cout << endl;
     L1.append(5); L1.print(); cout << endl;
+
     L1.insert(2, 0); L1.print(); cout << endl;
     L1.insert(1, 0); L1.print(); cout << endl;
     L1.insert(3, 2); L1.print(); cout << endl;
@@ -92,17 +130,22 @@ int main(){
     L2.append(4);
     L2.append(4);
     L2.append(1);
+    L2.print();
+
     L2.erase(2);
+    L2.print();
+
     L2.insert(5, 1);
     L2.insert(3, 2);
-    cout << "L2.at(3): " << L2.at(3) << endl;
+    L2.print();
+    cout <<  "L2.at(3): " << L2.at(3) << endl;
     L2.print();
     cout << endl;
 
     cout << "\nL3: input.txt" << endl;
     ArrayList L3("input.txt");
     L3.print();
-    */
-    getch();
+
+//    getch();
     return 0;
 }
