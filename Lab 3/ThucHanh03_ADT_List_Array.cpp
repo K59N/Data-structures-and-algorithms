@@ -92,8 +92,8 @@ void ArrayList::erase(int i){
 
 int& ArrayList::at(int i){
     assert(last >= 0 && i <= last && i >= 0);
-    cout << element[i];
-    return i;
+    return element[i];
+    //return i;
 }
 
 void ArrayList::print() const{
