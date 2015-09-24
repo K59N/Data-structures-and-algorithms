@@ -48,7 +48,7 @@ ArrayList::ArrayList(const char * filename){
 	{
 		is >> element[i];
 		i++;
-		if (i == MAX_SIZE-1) break;
+		if (i == MAX_SIZE+1) break;
 	}
 	is.close();
 	last = i-2;
