@@ -1,6 +1,5 @@
-//! \Filename: FastFile.cpp
-//! \Author: Loc VU
-//! \Date: 24.Sep.15
+//! @author: Loc VU
+//! Created on 24.Sep.15
 
 //! \brief : Complete source code in this file
 
@@ -16,7 +15,7 @@ public:
     static const int MAX_SIZE = 100; // So phan tu toi da cua mang
     ArrayList(); // Khoi tao danh sach rong
     ArrayList(int a[], int n); // Khoi tao DS bang du lieu luu trong mang a
-    ArrayList(char * filename); // Khoi tao DS bang du lieu luu trong tep filename
+    ArrayList(const char * filename); // Khoi tao DS bang du lieu luu trong tep filename
 
     bool empty() const; // Kiem tra DS rong hay khong
     int length() const; // Xac dinh do dai DS
@@ -41,29 +40,26 @@ ArrayList::ArrayList(int a[], int n){
     }
 }
 
-ArrayList::ArrayList(char * filename){
-    ifstream is(filename);
-    if (!is){
-         cout << "Can't open file!";
-        exit(1);
-    }else{
-        int var;
-        while(!is.eof()){
-            last++;
-            is >> var;
-            element[last] = var;
-        }
-    }
-    is.close();
-
+ArrayList::ArrayList(const char * filename){
+	int i=0;
+	ifstream is;
+	is.open(filename);
+	while (!is.eof())
+	{
+		is >> element[i];
+		i++;
+		if (i == MAX_SIZE-1) break;
+	}
+	is.close();
+	last = i-2;
 }
-
 bool ArrayList::empty() const{
     if (last < 0)
         return true;
 }
 
 int ArrayList::length() const{
+
     return last+1;
 }
 
