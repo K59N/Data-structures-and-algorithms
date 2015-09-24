@@ -36,7 +36,7 @@ ArrayList::ArrayList(){
 ArrayList::ArrayList(int a[], int n){
     for(int i = 0; i < n ; i++){
         element[i] = a[i];
-        last = n;
+        last = n-1;
     }
 }
 
