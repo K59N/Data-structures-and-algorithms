@@ -100,7 +100,7 @@ void ArrayList::print() const{
     for (int i = 0; i <= last; i++){
         cout << element[i] << " ";
     }
-    cout << endl;
+    cout <<"Last: " << last<< endl;
 }
 
 int main(){
