@@ -100,7 +100,7 @@ DArrayList::DArrayList(const DArrayList & someList){  //copy constructor
 }
 
 void DArrayList::operator=(const DArrayList & someList){
-    if (size < someList.size)
+    if (size != someList.size)
 	{
 		delete[] element;
 		size = someList.size;
