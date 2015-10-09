@@ -55,7 +55,6 @@ void readFile(Node *& head, char * filename){
     fin.close();
 }
 
-
 // Doc xuoi day so trong tep co ten filename vao DSLK
 void readFileReverse(Node *& head, char * filename){
     ifstream fin(filename);
@@ -101,6 +100,107 @@ Node* element(Node *& head, int i){
     }
 }
 
+//Chen phan tu x vao vi tri i
+void insert(Node *& head, int i, int x){
+    Node *dt, *tmp;
+    int count = 0;
+    while(dt->next != NULL && count < i){
+        dt = dt->next;
+        count++;
+    }
+    tmp->data = x;
+    tmp->next = dt->next;
+    dt->next = tmp;
+}
+
+//Chen x vao cuoi danh sach
+void append(Node *& head, int x){
+    Node *dt, *tmp;
+    while(dt->next != NULL){
+        dt = dt->next;
+    }
+    tmp->data = x;
+    tmp->next = NULL;
+    dt->next = tmp;
+}
+
+//Xoa phan tu o vi tri i
+void erase(Node *& head, int i){
+    Node *dt, *tmp;
+    int count = 0;
+    while(dt->next != NULL && count < i){
+        dt = dt->next;
+        count++;
+    }
+
+    tmp = dt->next;
+    dt->next = dt->next->next;
+    tmp->next = NULL;
+}
+
+// Tinh tong cac so
+int sumList(Node *& head){
+    Node *dt;
+    int sum = 0;
+    while (dt->next != NULL){
+        sum += dt->data;
+        dt = dt->next;
+    }
+    return sum;
+}
+
+// Tim so be nhat trong dslk
+int minList(Node *& head){
+    Node *dt;
+    int min = dt->data;
+    while (dt->next != NULL){
+        if (dt->data < min){
+            min = dt->data;
+        }
+        dt = dt->next;
+    }
+    return min;
+}
+
+// Tim so lon nhat trong dslk
+int maxList(Node *& head){
+    Node *dt;
+    int max = dt->data;
+    while (dt->next != NULL){
+        if (dt->data > max){
+            max = dt->data;
+        }
+        dt = dt->next;
+    }
+    return max;
+}
+
+//Xoa bo so le
+void eraseOdd(Node *& head){
+    Node *dt;
+    int count = 0;
+    while(dt->next != NULL){
+        if (dt->data % 2 != 0){
+            erase(dt, count);
+        }
+        dt = dt->next;
+        count++;
+    }
+}
+
+//In dslk
+void print(Node *& head){
+    Node * tmp = new Node;
+    if (head == NULL){
+        cout << "This list  is empty!";
+    }else{
+        for(tmp = head; tmp!= NULL; tmp = tmp->next){
+            cout << tmp->data << endl;
+
+        }
+    }
+}
+
 // Chuong trinh chinh
 int main(){
     cout << "Chuong trinh demo DSLK don." << endl;
@@ -110,9 +210,9 @@ int main(){
     head2 = NULL; // Khoi tao DSLK2 rong
     readFile(head1, "numbers1.txt");
     readFile(head2, "numbers2.txt");
-//    print(head1);
-//    cout << endl;
-//    print(head2);
+    print(head1);
+    cout << endl;
+    print(head2);
     cout << "\nXong!" << endl;
 
 //    getch();
