@@ -25,6 +25,21 @@ void addFirst(Node *& head, int value){
         head = tmp;
     }
 }
+//Chen x vao cuoi danh sach
+void append(Node *& head, int x){
+    Node *dt, *tmp;
+    tmp = new Node;
+    dt = head;
+    tmp->data = x;
+    tmp->next = NULL;
+    if(head == NULL)
+        head = tmp;
+    while(dt->next != NULL){
+        dt = dt->next;
+    }
+
+    dt->next = tmp;
+}
 
 // Doc xuoi day so trong tep co ten filename vao DSLK
 void readFile(Node *& head, char * filename){
@@ -116,27 +131,19 @@ void insert(Node *& head, int i, int x){
     tmp = new Node;
     int count = 0;
     dt = head;
-    while(dt->next != NULL && count < i-1){
-        dt = dt->next;
-        count++;
+    if ( i == 0 ){
+        addFirst(head, x);
+    }else{
+        while(dt->next != NULL && count < i-1){
+            dt = dt->next;
+            count++;
+        }
+        tmp->data = x;
+        tmp->next = dt->next;
+        dt->next = tmp;
     }
-    tmp->data = x;
-    tmp->next = dt->next;
-    dt->next = tmp;
 }
 
-//Chen x vao cuoi danh sach
-void append(Node *& head, int x){
-    Node *dt, *tmp;
-    tmp = new Node;
-    dt = head;
-    while(dt->next != NULL){
-        dt = dt->next;
-    }
-    tmp->data = x;
-    tmp->next = NULL;
-    dt->next = tmp;
-}
 
 //Xoa phan tu o vi tri i
 void erase(Node *& head, int i){
@@ -144,14 +151,20 @@ void erase(Node *& head, int i){
     int count = 0;
     tmp = new Node;
     dt = head;
-    while(dt->next != NULL && count < i-1){
-        dt = dt->next;
-        count++;
+    if (i == 0){
+        head = dt->next;
+        delete dt;
     }
+    else{
+        while(dt->next != NULL && count < i-1){
+            dt = dt->next;
+            count++;
+        }
 
-    tmp = dt->next;
-    dt->next = dt->next->next;
-    tmp->next = NULL;
+        tmp = dt->next;
+        dt->next = dt->next->next;
+        tmp->next = NULL;
+    }
 }
 
 // Tinh tong cac so
@@ -208,27 +221,21 @@ int maxList(Node *& head){
 
 //Xoa bo so le
 void eraseOdd(Node *& head){
-    Node *dt, *tmp, *pre;
-    dt = head;
-    tmp = new Node;
-    //Kiem tra phan tu dau tien
-    if(dt->data % 2 != 0){
-        tmp = dt;
-        dt->next = head;
-        pre = dt;
-        dt = dt->next;
-        tmp = NULL;
-    }
-    while(dt->next != NULL){
-        if(dt->data % 2 != 0){
-            pre->next = dt->next;
-            dt = NULL;
-            dt = pre->next;
+    Node *dt = head;
+    int i = 0;
+    while(dt != NULL){
+        if(dt->data % 2){
+            erase(head, i);
+            dt = dt->next;
         }else{
             dt = dt->next;
-            pre = pre->next;
+            i++;
         }
     }
+    if(dt->data % 2){
+        erase(head, i);
+    }
+
 }
 
 //In dslk
@@ -251,8 +258,8 @@ int main(){
     Node * head1, * head2;
     head1 = NULL; // Khoi tao DSLK1 rong
     head2 = NULL; // Khoi tao DSLK2 rong
- //   readFile(head1, "numbers1.txt");
- //   readFile(head2, "numbers2.txt");
+   // readFile(head1, "numbers1.txt");
+  //  readFile(head2, "numbers2.txt");
     cout << "Read: " << endl;
     print(head1);
     cout << endl;
@@ -283,7 +290,7 @@ int main(){
     print(head1);
 
     cout << "-----> Erase 2 :" << endl;
-    erase(head1, 2);
+    erase(head1, 9);
     print(head1);
 
     cout << "-----> Sum list :" <<  sumList(head1) << endl;
