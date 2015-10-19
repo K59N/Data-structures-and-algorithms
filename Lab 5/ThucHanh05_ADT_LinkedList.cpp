@@ -29,49 +29,36 @@ void addFirst(Node *& head, int value){
 void append(Node *& head, int x){
     Node *dt, *tmp;
     tmp = new Node;
-    dt = head;
     tmp->data = x;
     tmp->next = NULL;
     if(head == NULL)
         head = tmp;
-    while(dt->next != NULL){
-        dt = dt->next;
+    else{
+        dt = head;
+        while(dt->next != NULL){
+            dt = dt->next;
+        }
+        dt->next = tmp;
     }
-
-    dt->next = tmp;
 }
 
 // Doc xuoi day so trong tep co ten filename vao DSLK
-void readFile(Node *& head, char * filename){
+void readFile(Node *& head, const char * filename){
     ifstream fin(filename);
     if(!fin.good()){
         cout << "Loi doc file " << filename << endl;
         return;
     }
     int v;
-    Node *tmp, *dt;                 // *dt la con tro duyet
     do{
         fin >> v;
-        tmp = new Node;
-        tmp->data = v;
-
-        if(head == NULL){           //list rong
-            head = tmp;
-            head->next = NULL;
-        }else{                      //list khong rong
-            dt = head;
-            while(dt->next != NULL){ //duyet den cuoi danh sach
-                dt = dt->next;
-            }
-            dt->next = tmp;
-            tmp->next = NULL;
-        }
+        append(head, v);
     }while(!fin.eof());
     fin.close();
 }
 
 // Doc nguoc day so trong tep co ten filename vao DSLK
-void readFileReverse(Node *& head, char * filename){
+void readFileReverse(Node *& head, const char * filename){
     ifstream fin(filename);
     if(!fin.good()){
         cout << "Loi doc file " << filename << endl;
@@ -225,21 +212,21 @@ void eraseOdd(Node *& head){
     int i = 0;
     while(dt != NULL){
         if(dt->data % 2){
-            erase(head, i);
             dt = dt->next;
+            erase(head, i);
+
         }else{
             dt = dt->next;
             i++;
         }
     }
-    if(dt->data % 2){
-        erase(head, i);
-    }
+   // if(dt->data % 2)
+     //   erase(head, i);
 
 }
 
 //In dslk
-void print(Node *& head){
+void print(Node * head){
     Node * tmp = new Node;
     if (head == NULL){
         cout << "This list  is empty!";
@@ -258,8 +245,8 @@ int main(){
     Node * head1, * head2;
     head1 = NULL; // Khoi tao DSLK1 rong
     head2 = NULL; // Khoi tao DSLK2 rong
-   // readFile(head1, "numbers1.txt");
-  //  readFile(head2, "numbers2.txt");
+    readFile(head1, "numbers1.txt");
+    readFile(head2, "numbers2.txt");
     cout << "Read: " << endl;
     print(head1);
     cout << endl;
@@ -290,7 +277,7 @@ int main(){
     print(head1);
 
     cout << "-----> Erase 2 :" << endl;
-    erase(head1, 9);
+    erase(head1, 2);
     print(head1);
 
     cout << "-----> Sum list :" <<  sumList(head1) << endl;
@@ -300,6 +287,7 @@ int main(){
     cout << "-----> EraseOdd :" << endl;
     eraseOdd(head1);
     print(head1);
+
     cout << "\DONE!" << endl;
 
 //    getch();
