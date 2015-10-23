@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <assert.h>
+//#include <conio.h>
 using namespace std;
 
 class ListStack{
@@ -102,9 +103,11 @@ int main(){
     cout << "Enter the value: " ;
     cin >> value;
     dec_to_bin(value, *S);
+    cout << "Covert from decima to binary :" ;
     while(! S->Empty()){
         cout << S->Pop();
     }
     delete S;
+    //getch();
     return 0;
 }
