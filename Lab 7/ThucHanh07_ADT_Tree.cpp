@@ -180,11 +180,11 @@ int deep(Node * p){
 
 // Tinh do cao cua cay
 int height(Node * root){
-    static int maxDeep = 0;   //Do sau lon nhat cua cay
+    static int maxDeep = 1;   //Do sau lon nhat cua cay
     if (root){
         Node *p = root->firstChild;
         if(deep(root) > maxDeep){
-            maxDeep = deep(root);
+            maxDeep = deep(root) + 1;
         }
         while(p){
             height(p);
