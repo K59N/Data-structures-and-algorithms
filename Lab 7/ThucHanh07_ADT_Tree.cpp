@@ -194,11 +194,11 @@ int height(Node * root){
     return maxDeep;
 }
 
-//Xet cay co la cay nhi phan day du hay khong
+//Xet cay co la cay nhi phan hay khong
 int isBinaryTree(Node * root){
     if (root){
         Node *p = root->firstChild;
-        if(p && p->nextSibling && !p->nextSibling->nextSibling){   // Co dung 2 Node child cua Node parent
+        if(p && !p->nextSibling->nextSibling){   // Co Node thu nhat va khong co Node thu 3
             isBinaryTree(p);
             p = p->nextSibling;
         }else{
