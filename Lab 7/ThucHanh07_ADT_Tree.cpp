@@ -193,6 +193,8 @@ int height(Node * root){
     }
     return maxDeep;
 }
+
+//Xet cay co la cay nhi phan day du hay khong
 int isBinaryTree(Node * root){
     if (root){
         Node *p = root->firstChild;
