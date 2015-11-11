@@ -99,7 +99,7 @@ void ChainHash::findInFile(const char * filename){
 }
 
 int main(){
-    string dict, str;
+//    string dict, str;
     ChainHash chh;
     chh.readFile("dictionary.txt");
 
