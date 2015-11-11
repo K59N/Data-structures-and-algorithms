@@ -55,12 +55,10 @@ bool ChainHash::search(string dict){
 void ChainHash::insert(const string &dict){
     int i = Hash(dict);
     Node *p = new Node;
-    if(p != NULL){
+    if(p != NULL and search(dict) == false){
         p->data = dict;
         p->next = T[i];
         T[i] = p;                        //Xen vao dau day chuyen
-    }else{
-        cout << "Tu " << dict << "da xuat hien o slot " << i << endl;
     }
 }
 
@@ -68,7 +66,7 @@ void ChainHash::print(){
     for(int i=0; i < SIZE; i++){
         cout << "Slot " << i << "   ";
         for(Node * p = T[i]; p != NULL; p = p->next){
-            cout << p->data << " -> " ;
+            cout << p->data << " - " ;
         }
         cout << endl;
     }
@@ -78,8 +76,6 @@ void ChainHash::readFile(const char * filename){
     ifstream infile(filename);
     if(!infile.good()){
         cout << filename << " doesn't exist !" << endl;
-        cin.ignore();
-        cin.get();
     }
     while(!infile.eof()){
         getline(infile, str, ' ');
@@ -92,8 +88,6 @@ void ChainHash::findInFile(const char * filename){
     ifstream infile(filename);
     if(!infile.good()){
         cout << filename << " doesn't exist !" << endl;
-        cin.ignore();
-        cin.get();
     }
     while(!infile.eof()){
         getline(infile, str, ' ');
