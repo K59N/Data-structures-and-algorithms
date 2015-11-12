@@ -5,18 +5,7 @@
 using namespace std;
 
 // Dinh nghia cau truc 1 dinh
-struct Node{
-    int key;
-    char data;
-    Node * left;
-    Node * right;
-    Node * parent;
-    Node (int k, char d){
-    	key = k;
-    	data = d;
-    	left = right = parent = NULL;
-    }
-};
+
 
 class PriorityQueue{
 	public:
@@ -30,6 +19,18 @@ class PriorityQueue{
 
 
 	private:
+        struct Node{
+            int key;
+            char data;
+            Node * left;
+            Node * right;
+            Node * parent;
+            Node (int k, char d){
+                key = k;
+                data = d;
+                left = right = parent = NULL;
+            }
+        };
 		Node * root;
 		Node * last;
 		void upHeap();                                      // Duyet tu last len
@@ -67,21 +68,33 @@ char PriorityQueue::findMin(){
 }
 
 void PriorityQueue::insert(int k, char d){
+    Node *p = new Node(k,d);
 	if (root == NULL){
-        last = root;
+        root = p;
+        last = p;
 	}
     else if (root == last){
-        last = root->left;
-        last->parent = root;
-    }else{
+        root->left = p;
+        root->right = NULL;
+        p->parent = root;
+        last = p;
+
+    }
+    else{
+
     	if (last == last->parent->left){
-    		last = last->parent->right;
+    		last->parent->right = p;
+            p->parent = last->parent;
+            last = p;
+
     	}
     	else{
             while( last == last->parent->right){
+
                 last = last->parent;
-                if(last == root)
+                if(last == root){
                     break;
+                }
                 if( last == last->parent->left){
                     last = last->parent->right;
                     break;
@@ -90,16 +103,19 @@ void PriorityQueue::insert(int k, char d){
             while( last->left != NULL){
                 last = last->left;
             }
+//
+            last->left = p;
+            p->parent = last;
+            last = p;
         }
     }
-    last->key = k;
-    last->data = d;
-//	upHeap();
+    cout << "Last key :" << last->key << endl;
+	upHeap();
 }
 
 void PriorityQueue::removeMin(){
 	if (root == NULL){
-
+        cout << "The tree is empty !" << endl;
 	}else if (root == last){
 		delete root;
 		delete last;
@@ -109,15 +125,22 @@ void PriorityQueue::removeMin(){
 		swapNodeData(root, last);
 		Node * pNode = last;
 		if (pNode == pNode->parent->right){
-			// ma cua ban de cap nhat con tro last
+			pNode = pNode->parent->left;
 		}
 		else{
-			// ma cua ban de cap nhat con tro last
-			// su dung con tro phu pNode
-			// di nguoc len toi root hoac toi right
-    		// neu right chuyen sang left
-    		// roi di xuong theo right toi NULL
-			// cap nhat last
+			while(pNode = pNode->parent->left){
+                pNode = pNode->parent;
+                if(pNode == root){
+                    break;
+                }
+                if(pNode == pNode->parent->right){
+                    pNode = pNode->parent->left;
+                    break;
+                }
+			}
+			while(pNode->right != NULL){
+                pNode = pNode->right;
+			}
 		}
 		if (last == last->parent->left){
 			last->parent->left = NULL;
@@ -136,13 +159,13 @@ void PriorityQueue::print(){
 
 void PriorityQueue::upHeap(){
     Node * cur = last;
-    do{
+
+    while (cur != root){
         if(cur->key < cur->parent->key){
             swapNodeData(cur, cur->parent);
         }
         cur = cur->parent;
     }
-    while (cur != root);
 }
 
 void PriorityQueue::downHeap(){
