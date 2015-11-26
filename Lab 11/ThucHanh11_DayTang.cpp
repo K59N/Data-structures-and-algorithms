@@ -37,9 +37,6 @@ void output(int n, int a[]){
                T[i] = jmax;
           }
      }
-    for (int i= 0 ; i<= n+2 ; i++){
-        cout << "L[" << i << "] = " <<  L[i] <<endl << "T[" << i << "] = " << T[i]<< endl ;
-    }
      i=T[0];
      cout << L[0]-2 << endl;   // Tru 2 phan tu INT_MIN va INT_MAX
      while( i != n+1 ){
