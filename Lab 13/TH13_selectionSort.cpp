@@ -48,17 +48,17 @@ void swap(int&a,int&b){
 }
 
 void selectionSort(int a[], int n, int index[]){
-    int max;
+    int min;
     FORI(i, 0, n-1){
-        max = i;
+        min = i;
         FORI(j, i+1, n){
-            if(a[j] > a[max]){
-                max = j;
+            if(a[j] < a[min]){
+                min = j;
             }
         }
-        if(max != i){
-            swap(a[max], a[i]);
-            swap(index[max], index[i]);
+        if(min != i){
+            swap(a[min], a[i]);
+            swap(index[min], index[i]);
         }
     }
 }

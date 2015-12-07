@@ -50,7 +50,7 @@ void swap(int&a,int&b){
 void bubbleSort(int a[], int n, int index[]){
     FORI(i, 0, n){
         FORI(j, 0, n-1){
-            if ( a[j] < a[j+1]){
+            if ( a[j] > a[j+1]){
                 swap(a[j], a[j+1]);
                 swap(index[j], index[j+1]);
             }
