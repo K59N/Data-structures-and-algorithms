@@ -52,7 +52,7 @@ void selectionSort(int a[], int n, int index[]){
     FORI(i, 0, n-1){
         min = i;
         FORI(j, i+1, n){
-            if(a[j] < a[min]){
+            if(a[j] <= a[min]){
                 min = j;
             }
         }
